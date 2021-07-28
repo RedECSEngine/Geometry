@@ -58,8 +58,28 @@ extension Point: Hashable {
     }
 }
 
+public func + (_ lhs: Point, _ rhs: Point) -> Point {
+    Point(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
+}
+
+public func += (_ lhs: inout Point, _ rhs: Point) {
+    lhs = Point(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
+}
+
+public func - (_ lhs: Point, _ rhs: Point) -> Point {
+    Point(x: lhs.x - rhs.x, y: lhs.y - rhs.y)
+}
+
+public func -= (_ lhs: inout Point, _ rhs: Point) {
+    lhs = Point(x: lhs.x - rhs.x, y: lhs.y - rhs.y)
+}
+
 public func * (_ lhs: Point, _ rhs: Double) -> Point {
     Point(x: lhs.x * rhs, y: lhs.y * rhs)
+}
+
+public func *= (_ lhs: inout Point, _ rhs: Double) {
+    lhs = Point(x: lhs.x * rhs, y: lhs.y * rhs)
 }
 
 public func * (_ lhs: Point, _ rhs: Point) -> Point {
@@ -68,6 +88,10 @@ public func * (_ lhs: Point, _ rhs: Point) -> Point {
 
 public func / (_ lhs: Point, _ rhs: Double) -> Point {
     Point(x: lhs.x / rhs, y: lhs.y / rhs)
+}
+
+public func /= (_ lhs: inout Point, _ rhs: Double) {
+    lhs = Point(x: lhs.x / rhs, y: lhs.y / rhs)
 }
 
 public func / (_ lhs: Point, _ rhs: Point) -> Point {
