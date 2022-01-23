@@ -1,7 +1,7 @@
 
 import Foundation
 
-public struct Point: Codable {
+public struct Point: Hashable, Codable {
     public var x: Double
     public var y: Double
 
@@ -13,48 +13,45 @@ public struct Point: Codable {
     }
 
     public func offsetBy(_ offset: Point) -> Point {
-        return Point(x: x + offset.x, y: y + offset.y)
+        Point(x: x + offset.x, y: y + offset.y)
     }
 
     public func offsetBy(x: Double, y: Double) -> Point {
-        return offsetBy(Point(x: x, y: y))
+        offsetBy(Point(x: x, y: y))
     }
 
     public func diffOf(_ point: Point) -> Point {
-        return Point(x: x - point.x, y: y - point.y)
+        Point(x: x - point.x, y: y - point.y)
     }
 
     public func distanceFrom(_ otherPoint: Point) -> Double {
-        let xDist = x - otherPoint.x
-        let yDist = y - otherPoint.y
-        return Double(sqrt((xDist * xDist) + (yDist * yDist)))
+        sqrt(pow(x - otherPoint.x, 2) + pow(y - otherPoint.y, 2))
     }
 
     public func roundedUp() -> Point {
-        return Point(x: ceil(x), y: ceil(y))
+        Point(x: ceil(x), y: ceil(y))
     }
     
-    var length: Double {
-        Double(sqrt((x * x) + (y * y)))
+    public var length: Double {
+        sqrt((x * x) + (y * y))
+    }
+    
+    public func normalized(to maxValue: Double) -> Point {
+        var new = self
+        new.normalize(to: maxValue)
+        return new
+    }
+    
+    public mutating func normalize(to maxValue: Double) {
+        guard length > 0 else { return }
+        self = (self / length) * maxValue
     }
 
 }
 
 extension Point: CustomStringConvertible {
     public var description: String {
-        return "x:\(x), y:\(y)"
-    }
-}
-
-extension Point: Equatable {}
-
-public func == (_ lhs: Point, _ rhs: Point) -> Bool {
-    return lhs.x == rhs.x && lhs.y == rhs.y
-}
-
-extension Point: Hashable {
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(description)
+        "x:\(x), y:\(y)"
     }
 }
 

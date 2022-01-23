@@ -1,18 +1,7 @@
 @testable import Geometry
 import SpriteKit
 import XCTest
-
-extension Point {
-    var cgPoint: CGPoint {
-        return CGPoint(x: x, y: y)
-    }
-}
-
-extension Rect {
-    var cgRect: CGRect {
-        return CGRect(x: origin.x, y: origin.y, width: size.width, height: size.height)
-    }
-}
+import GeometrySpriteKitExtensions
 
 final class PointAndRectTests: XCTestCase {
     func testShouldNotContainThePoint() {
@@ -27,10 +16,10 @@ final class PointAndRectTests: XCTestCase {
         XCTAssertEqual(rect1.contains(point3), false)
         XCTAssertEqual(rect1.contains(point4), false)
 
-        XCTAssertEqual(rect1.cgRect.contains(point1.cgPoint), false)
-        XCTAssertEqual(rect1.cgRect.contains(point2.cgPoint), false)
-        XCTAssertEqual(rect1.cgRect.contains(point3.cgPoint), false)
-        XCTAssertEqual(rect1.cgRect.contains(point4.cgPoint), false)
+        XCTAssertEqual(rect1.makeCGRect().contains(point1.makeCGPoint()), false)
+        XCTAssertEqual(rect1.makeCGRect().contains(point2.makeCGPoint()), false)
+        XCTAssertEqual(rect1.makeCGRect().contains(point3.makeCGPoint()), false)
+        XCTAssertEqual(rect1.makeCGRect().contains(point4.makeCGPoint()), false)
     }
 
     func testShouldContainThePoint() {
@@ -43,9 +32,9 @@ final class PointAndRectTests: XCTestCase {
         XCTAssertEqual(rect1.contains(point2), true)
         XCTAssertEqual(rect1.contains(point3), true)
 
-        XCTAssertEqual(rect1.cgRect.contains(point1.cgPoint), true)
-        XCTAssertEqual(rect1.cgRect.contains(point2.cgPoint), true)
-        XCTAssertEqual(rect1.cgRect.contains(point3.cgPoint), true)
+        XCTAssertEqual(rect1.makeCGRect().contains(point1.makeCGPoint()), true)
+        XCTAssertEqual(rect1.makeCGRect().contains(point2.makeCGPoint()), true)
+        XCTAssertEqual(rect1.makeCGRect().contains(point3.makeCGPoint()), true)
     }
 
     func testShouldNotEvaluateRectsAsIntersecting() {
@@ -60,9 +49,9 @@ final class PointAndRectTests: XCTestCase {
         XCTAssertEqual(rect1.intersects(rect4), false)
         XCTAssertEqual(rect1.intersects(rect5), false)
 
-        XCTAssertEqual(rect1.cgRect.intersects(rect2.cgRect), false)
-        XCTAssertEqual(rect1.cgRect.intersects(rect3.cgRect), false)
-        XCTAssertEqual(rect1.cgRect.intersects(rect5.cgRect), false)
+        XCTAssertEqual(rect1.makeCGRect().intersects(rect2.makeCGRect()), false)
+        XCTAssertEqual(rect1.makeCGRect().intersects(rect3.makeCGRect()), false)
+        XCTAssertEqual(rect1.makeCGRect().intersects(rect5.makeCGRect()), false)
     }
 
     func testShouldEvaluateRectsAsIntersecting() {
@@ -75,8 +64,8 @@ final class PointAndRectTests: XCTestCase {
         XCTAssertEqual(rect1.intersects(rect3), true)
         XCTAssertEqual(rect1.intersects(rect4), true)
 
-        XCTAssertEqual(rect1.cgRect.intersects(rect2.cgRect), true)
-        XCTAssertEqual(rect1.cgRect.intersects(rect3.cgRect), true)
-        XCTAssertEqual(rect1.cgRect.intersects(rect4.cgRect), true)
+        XCTAssertEqual(rect1.makeCGRect().intersects(rect2.makeCGRect()), true)
+        XCTAssertEqual(rect1.makeCGRect().intersects(rect3.makeCGRect()), true)
+        XCTAssertEqual(rect1.makeCGRect().intersects(rect4.makeCGRect()), true)
     }
 }

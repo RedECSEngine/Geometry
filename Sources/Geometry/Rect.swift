@@ -1,6 +1,6 @@
 import Foundation
 
-public struct Rect: Codable {
+public struct Rect: Hashable, Codable {
     public var origin: Point
     public var size: Size
     
@@ -111,14 +111,3 @@ extension Rect: CustomStringConvertible {
     }
 }
 
-extension Rect: Equatable {}
-
-public func == (_ lhs: Rect, _ rhs: Rect) -> Bool {
-    return lhs.size == rhs.size && lhs.center == rhs.center
-}
-
-extension Rect: Hashable {
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(description)
-    }
-}
