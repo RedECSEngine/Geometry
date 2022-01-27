@@ -1,6 +1,4 @@
-
 import Foundation
-import simd
 
 public struct Line: Hashable, Codable {
     public var a: Point
