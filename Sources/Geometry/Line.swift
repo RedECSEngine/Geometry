@@ -13,12 +13,27 @@ public struct Line: Hashable, Codable {
         a.distanceFrom(b)
     }
     
+    public var center: Point {
+        Point(
+            x: (a.x + b.x) / 2,
+            y: (a.y + b.y) / 2
+        )
+    }
+    
+    public var isHorizontal: Bool {
+        a.y == b.y
+    }
+    
+    public var isVertical: Bool {
+        a.x == b.x
+    }
+    
     public func intersects(_ p: Point) -> Bool {
         (a.distanceFrom(p) + b.distanceFrom(p)) - a.distanceFrom(b) < 0.0001
     }
     
-    public var dotProduct: Double {
-        a.x * b.x + a.y * b.y
+    public func offset(by amount: Point) -> Line {
+        Line(a: a.offsetBy(amount), b: b.offsetBy(amount))
     }
     
     public func project(on line: Line) -> Point {
@@ -29,31 +44,17 @@ public struct Line: Hashable, Codable {
     }
     
     public func intersects(_ c: Circle) -> Bool {
-        return distance(to: c.center) <= c.radius
+        // First check if the ends of the line are within the circle
+        if c.contains(a) || c.contains(b) {
+            return true
+        }
+        // If not, use projection to determine if there is intersection along the line
+        let proj = a + Line(a: c.center, b: a).project(on: self)
+        let acLength = proj.distanceFrom(a)
+        let bcLength = proj.distanceFrom(b)
+        let calculatedLength = acLength + bcLength
+        return (c.center.distanceFrom(proj) <= c.radius) && (calculatedLength == length)
     }
-    
-    public func distance(to p: Point) -> Double {
-        let ac = p - a
-        let ab = p - b
-        let d = Line(a: .zero, b: ac).project(on: Line(a: .zero, b: ab)) + a
-//        let ad = d - a
-        
-        // Determine whether to measure distance by a(start), b(end), or d(projected mid point)
-        return min(
-            min(
-                sqrt(Line(a: p - a, b: p - a).dotProduct),
-                sqrt(Line(a: p - b, b: p - b).dotProduct)),
-            sqrt(Line(a: p - d, b: p - d).dotProduct)
-        )
-//        let k = abs(ab.x) > abs(ab.y) ? (ad.x / ab.x) : (ad.y / ab.y)
-//        if k <= 0.0 {
-//            return sqrt(Line(a: p - a, b: p - a).dotProduct)
-//        } else if k >= 1.0 {
-//            return sqrt(Line(a: p - b, b: p - b).dotProduct)
-//        }
-//        return sqrt(Line(a: p - d, b: p - d).dotProduct);
-    }
-
 }
 
 extension Line: CustomStringConvertible {

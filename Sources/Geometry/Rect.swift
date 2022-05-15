@@ -1,5 +1,3 @@
-import Foundation
-
 public struct Rect: Hashable, Codable {
     public var origin: Point
     public var size: Size
@@ -35,6 +33,11 @@ public struct Rect: Hashable, Codable {
             size.height = abs(size.height)
         }
     }
+    
+    public func offset(by point: Point) -> Rect {
+        Rect(center: center.offsetBy(point), size: size)
+    }
+
 }
 
 extension Rect {
