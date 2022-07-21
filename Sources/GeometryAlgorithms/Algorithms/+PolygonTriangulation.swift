@@ -3,6 +3,7 @@ import Geometry
 public extension GeometryAlgorithms {
     enum TriangulationError: Error {
         case cantResolveVertices
+        case cantResolveRemainingVertices([Point], [Triangle])
     }
         
     static func triangulatePolygon(_ path: Path) throws -> [Triangle] {
@@ -12,14 +13,18 @@ public extension GeometryAlgorithms {
         var triangles: [Triangle] = []
         
         var index: Int = -1
+        var triangleCountSinceLastIndexReset = 0
         vertexLoop: while vertices.count > 3 {
             index += 1
             
             if index >= vertices.count {
                 if triangles.isEmpty {
                     throw TriangulationError.cantResolveVertices
+                } else if triangleCountSinceLastIndexReset == triangles.count {
+                    throw TriangulationError.cantResolveRemainingVertices(vertices, triangles)
                 }
                 index = 0
+                triangleCountSinceLastIndexReset = triangles.count
             }
             
             let vertexPrev = vertices[prevIndex(from: index, count: vertices.count)]
@@ -54,7 +59,7 @@ public extension GeometryAlgorithms {
             
             triangles.append(triangle)
             vertices.remove(at: index)
-            index -= 1
+//            index -= 1
         }
         
         triangles.append(Triangle(

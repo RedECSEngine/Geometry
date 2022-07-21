@@ -2,7 +2,7 @@ public struct Rect: Hashable, Codable {
     public var origin: Point
     public var size: Size
     
-    public static let zero = Point(x: 0, y: 0)
+    public static let zero = Rect(x: 0, y: 0, width: 0, height: 0)
 
     public init(center: Point, size: Size) {
         let originX = center.x - (size.width / 2)
