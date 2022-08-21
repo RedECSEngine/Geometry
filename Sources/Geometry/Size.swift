@@ -4,6 +4,8 @@ public struct Size: Codable {
     public var width: Double
     public var height: Double
     
+    public static var zero: Size = .init(width: 0, height: 0)
+    
     public init(width: Double, height: Double) {
         self.width = width
         self.height = height

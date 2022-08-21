@@ -1,6 +1,7 @@
 import RealModule
+import Geometry
 
-public struct Matrix3: ExpressibleByArrayLiteral {
+public struct Matrix3: ExpressibleByArrayLiteral, Equatable, Codable {
     public private(set) var values: [Double]
     
     public init(values: [Double]) {
@@ -101,5 +102,41 @@ public extension Matrix3 {
     
     func scaledBy(sx: Double, sy: Double) -> Self {
         .multiply(self, .scaling(sx: sx, sy: sy))
+    }
+    
+    func calculateInverse() -> Self {
+        let a00 = self[0], a01 = self[1], a02 = self[2]
+        let a10 = self[3], a11 = self[4], a12 = self[5]
+        let a20 = self[6], a21 = self[7], a22 = self[8]
+        
+        let b01 = a22 * a11 - a12 * a21
+        let b11 = -a22 * a10 + a12 * a20
+        let b21 = a21 * a10 - a11 * a20
+
+        let det = a00 * b01 + a01 * b11 + a02 * b21
+        
+        return Matrix3(arrayLiteral:
+                        b01 / det, (-a22 * a01 + a02 * a21) / det, (a12 * a01 - a02 * a11) / det,
+                       b11 / det, (a22 * a00 - a02 * a20) / det, (-a12 * a00 + a02 * a10) / det,
+                       b21 / det, (-a21 * a00 + a01 * a20) / det, (a11 * a00 - a01 * a10) / det)
+    }
+}
+
+public extension Point {
+    func multiplyingMatrix(_ matrix: Matrix3) -> Point {
+        let cx = (matrix[0] * x) + (matrix[3] * y) + matrix[6]
+        let cy = (matrix[1] * x) + (matrix[4] * y) + matrix[7]
+        let cw = (matrix[2] * x) + (matrix[5] * y) + matrix[8]
+        return Point(x: cx / cw, y: cy / cw)
+    }
+}
+
+public extension Triangle {
+    func multiplyingMatrix(_ matrix: Matrix3) -> Triangle {
+        Triangle(
+            a: a.multiplyingMatrix(matrix),
+            b: b.multiplyingMatrix(matrix),
+            c: c.multiplyingMatrix(matrix)
+        )
     }
 }

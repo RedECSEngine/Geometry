@@ -25,6 +25,10 @@ public struct Triangle: Hashable, Codable {
             c: c.offsetBy(amount)
         )
     }
+    
+    public var points: [Point] {
+        [a,b,c]
+    }
 }
 
 extension Triangle {

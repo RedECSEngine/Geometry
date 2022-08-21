@@ -190,4 +190,16 @@ final class GeometryAlgorithmsTests: XCTestCase {
         )
     }
     
+    func testMatrixInversion() {
+        func testMatrixInversion() {
+            let matrixTranslated = Matrix3
+                    .translation(tx: 200, ty: 200)
+                    .rotatedBy(angleInRadians: 30.degreesToRadians())
+                    .scaledBy(sx: 0.9, sy: 1.2)
+            let invertedMatrix = matrixTranslated.calculateInverse()
+            XCTAssertEqual(Matrix3.multiply(matrixTranslated, invertedMatrix), .identity)
+        }
+        
+    }
+    
 }
