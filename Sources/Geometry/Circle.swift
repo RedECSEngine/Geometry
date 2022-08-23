@@ -28,4 +28,8 @@ public struct Circle: Hashable, Codable {
     public func contains(_ point: Point) -> Bool {
         center.distanceFrom(point) <= radius
     }
+    
+    public var size: Size {
+        Size(width: diameter, height: diameter)
+    }
 }

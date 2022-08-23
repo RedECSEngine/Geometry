@@ -23,6 +23,17 @@ public extension Rect {
     }
 }
 
+public extension Triangle {
+    func makeCGPath() -> CGPath {
+        let path = CGMutablePath()
+        path.move(to: a.makeCGPoint())
+        path.addLine(to: b.makeCGPoint())
+        path.addLine(to: c.makeCGPoint())
+        path.closeSubpath()
+        return path
+    }
+}
+
 public extension Path {
     func makeCGPath() -> CGPath {
         let path = CGMutablePath()
@@ -57,6 +68,8 @@ public extension Shape {
             return rect.makeCGPath()
         case .polygon(let path):
             return path.makeCGPath()
+        case .triangle(let triangle):
+            return triangle.makeCGPath()
         }
     }
 }
