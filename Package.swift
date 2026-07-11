@@ -1,12 +1,15 @@
-// swift-tools-version:5.3
-// The swift-tools-version declares the minimum version of Swift required to build this package.
+// swift-tools-version:6.1
 
 import PackageDescription
 
 let package = Package(
     name: "Geometry",
+    platforms: [
+        .macOS(.v11),
+        .iOS(.v14),
+        .tvOS(.v14)
+    ],
     products: [
-        // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
             name: "Geometry",
             targets: ["Geometry"]
@@ -21,8 +24,8 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-numerics.git", from: "0.0.1"),
-        .package(url: "https://github.com/pointfreeco/swift-snapshot-testing.git", from: "1.9.0")
+        .package(url: "https://github.com/apple/swift-numerics.git", from: "1.0.0"),
+        .package(url: "https://github.com/pointfreeco/swift-snapshot-testing.git", from: "1.18.0")
     ],
     targets: [
         // MARK: Geometry
@@ -46,12 +49,14 @@ let package = Package(
                 "GeometryAlgorithms",
                 "GeometrySpriteKitExtensions",
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing")
-            ]
+            ],
+            exclude: ["__Snapshots__"]
         ),
         // MARK: SpriteKitSupport
         .target(
             name: "GeometrySpriteKitExtensions",
             dependencies: ["Geometry"]
         ),
-    ]
+    ],
+    swiftLanguageModes: [.v6]
 )

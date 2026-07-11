@@ -1,7 +1,7 @@
 import RealModule
 import Geometry
 
-public struct Matrix3: ExpressibleByArrayLiteral, Equatable, Codable {
+public struct Matrix3: ExpressibleByArrayLiteral, Equatable, Codable, Sendable {
     public private(set) var values: [Double]
     
     public init(values: [Double]) {

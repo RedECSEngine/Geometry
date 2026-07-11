@@ -1,6 +1,6 @@
 import Foundation
 
-public struct Triangle: Hashable, Codable {
+public struct Triangle: Hashable, Codable, Sendable {
     public var a: Point
     public var b: Point
     public var c: Point

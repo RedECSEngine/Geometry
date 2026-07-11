@@ -1,4 +1,4 @@
-public struct Rect: Hashable, Codable {
+public struct Rect: Hashable, Codable, Sendable {
     public var origin: Point
     public var size: Size
     

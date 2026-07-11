@@ -1,4 +1,4 @@
-public struct Circle: Hashable, Codable {
+public struct Circle: Hashable, Codable, Sendable {
     public var center: Point
     public var radius: Double
 

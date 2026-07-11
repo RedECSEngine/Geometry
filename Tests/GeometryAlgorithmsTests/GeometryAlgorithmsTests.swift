@@ -5,6 +5,7 @@ import SpriteKit
 import XCTest
 import SnapshotTesting
 
+@MainActor
 final class GeometryAlgorithmsTests: XCTestCase {
     
     func testPointRotation() {

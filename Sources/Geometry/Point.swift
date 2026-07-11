@@ -1,7 +1,7 @@
 
 import Foundation
 
-public struct Point: Hashable, Codable {
+public struct Point: Hashable, Codable, Sendable {
     public var x: Double
     public var y: Double
 
