@@ -1,6 +1,6 @@
 import Foundation
 
-public struct Line: Hashable, Codable {
+public struct Line: Hashable, Codable, Sendable {
     public var a: Point
     public var b: Point
 

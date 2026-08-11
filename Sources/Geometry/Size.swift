@@ -1,8 +1,10 @@
 import Foundation
 
-public struct Size: Codable {
+public struct Size: Codable, Sendable {
     public var width: Double
     public var height: Double
+    
+    public static let zero: Size = .init(width: 0, height: 0)
     
     public init(width: Double, height: Double) {
         self.width = width
