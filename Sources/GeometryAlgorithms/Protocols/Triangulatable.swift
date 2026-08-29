@@ -33,6 +33,8 @@ extension Shape: Triangulatable {
             return [triangle]
         case .polygon(let path):
             return try path.triangulate()
+        case .line(let line, let width):
+            return try GeometryAlgorithms.triangulateLine(line, lineWidth: width)
         }
     }
 }

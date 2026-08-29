@@ -34,28 +34,26 @@ public struct Rect: Hashable, Codable, Sendable {
         }
     }
     
+    @available(*, deprecated, renamed: "offsetBy(_:)", message: "Renamed")
     public func offset(by point: Point) -> Rect {
-        Rect(center: center.offsetBy(point), size: size)
+        offsetBy(point)
+    }
+    
+    public func offsetBy(_ amount: Point) -> Rect {
+        Rect(center: center.offsetBy(amount), size: size)
     }
 
 }
 
 extension Rect {
-    public var minX: Double {
-        return origin.x
-    }
+    public var minX: Double { origin.x }
+    public var minY: Double { origin.y }
+    
+    public var midX: Double { origin.x + (size.width / 2) }
+    public var midY: Double { origin.y + (size.height / 2) }
 
-    public var minY: Double {
-        return origin.y
-    }
-
-    public var maxX: Double {
-        return origin.x + size.width
-    }
-
-    public var maxY: Double {
-        return origin.y + size.height
-    }
+    public var maxX: Double { origin.x + size.width }
+    public var maxY: Double { origin.y + size.height }
 
     public var center: Point {
         get {

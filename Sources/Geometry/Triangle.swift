@@ -18,7 +18,12 @@ public struct Triangle: Hashable, Codable, Sendable {
         )
     }
     
-    public func offset(by amount: Point) -> Triangle {
+    @available(*, deprecated, renamed: "offsetBy(_:)", message: "Renamed")
+    public func offset(by point: Point) -> Triangle {
+        offsetBy(point)
+    }
+    
+    public func offsetBy(_ amount: Point) -> Triangle {
         Triangle(
             a: a.offsetBy(amount),
             b: b.offsetBy(amount),

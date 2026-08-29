@@ -32,7 +32,12 @@ public struct Line: Hashable, Codable, Sendable {
         (a.distanceFrom(p) + b.distanceFrom(p)) - a.distanceFrom(b) < 0.0001
     }
     
-    public func offset(by amount: Point) -> Line {
+    @available(*, deprecated, renamed: "offsetBy(_:)", message: "Renamed")
+    public func offset(by point: Point) -> Line {
+        offsetBy(point)
+    }
+    
+    public func offsetBy(_ amount: Point) -> Line {
         Line(a: a.offsetBy(amount), b: b.offsetBy(amount))
     }
     

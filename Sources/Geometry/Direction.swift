@@ -1,6 +1,6 @@
 import Foundation
 
-public enum Direction: String, Codable, Sendable {
+public enum Direction: String, Codable, Sendable, Hashable {
     case up
     case down
     case left

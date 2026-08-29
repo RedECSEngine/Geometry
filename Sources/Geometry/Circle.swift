@@ -17,8 +17,13 @@ public struct Circle: Hashable, Codable, Sendable {
         center = rect.center
     }
     
+    @available(*, deprecated, renamed: "offsetBy(_:)", message: "Renamed")
     public func offset(by point: Point) -> Circle {
-        Circle(center: center.offsetBy(point), radius: radius)
+        offsetBy(point)
+    }
+    
+    public func offsetBy(_ amount: Point) -> Circle {
+        Circle(center: center.offsetBy(amount), radius: radius)
     }
     
     public func intersects(_ circle2: Circle) -> Bool {
